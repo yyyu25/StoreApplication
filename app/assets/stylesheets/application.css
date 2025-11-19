@@ -8,3 +8,155 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+    .layout {
+    display: flex;
+    gap: 20px;
+}
+
+aside {
+    width: 25%;
+    background: #f7f7f7;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+section {
+    width: 100%;
+    padding: 20px;
+}
+
+header {
+    background: rgb(196, 210, 223);
+    color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.product-form {
+    width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #f7f7f7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.product-form div {
+    margin-bottom: 15px;
+}
+
+.product-form input,
+.product-form textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.product-form label {
+    font-weight: bold;
+}
+
+.product_header{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.btn-edit{
+    margin: 10px;
+    background-color: #1882d8; /* Bootstrap danger 红 */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-delete{
+    margin: 10px;
+    background-color: #ee2b3f; /* Bootstrap danger 红 */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.link-btn{
+    background: none;
+    border: none;
+    color: #0003cc;   /* 红色 */
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.link-btn:hover{
+    color: #1a83e0;
+}
+
+.link-delete-btn{
+    background: none;
+    border: none;
+    color: #cc0000;   /* 红色 */
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.link-delete-btn:hover {
+    color: #ff0000;
+}
+
+.inline-form {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* ========== Offcanvas 面板样式 ========== */
+.offcanvas {
+    background-color: #f4f1ee;   /* 莫兰迪米色 */
+    padding: 10px;
+}
+
+/* Header：Continue + Cart */
+.offcanvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* 分隔线 */
+.offcanvas hr {
+    border-top: 1px solid #d2c8be;
+    margin: 12px 0;
+}
+
+/* ========== 商品项 ========== */
+.cart-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cart-item img {
+    border-radius: 6px;
+    margin-bottom: 12px;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid #e0d9d1;
+}
+
+/* 文案 */
+.offcanvas-body p {
+    margin: 6px 0;
+    font-size: 1rem;
+}

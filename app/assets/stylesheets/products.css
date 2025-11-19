@@ -1,11 +1,43 @@
-.products {
-
+.list_line_odd, 
+.list_line_even {
+    height: 200px;
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
 }
 
-.list_line_odd {
-    background-color: rgb(237, 237, 220);
+.list_line_odd{
+    background-color: rgb(251, 251, 232);
 }
 
 .list_line_even {
-    background-color:rgb(203, 199, 199);
+    background-color:rgb(235, 225, 225);
+}
+
+.product-img{
+    width: 30%;
+    height: 200px;  /* 固定高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(
+        to bottom,
+        #f3f3f3,
+        #ffffff
+    );
+}
+
+.product-img img{
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;  /* 保持比例不裁切 */
+    object-position: center; /* 居中 */
+    background-color: #f9f9f9; /* 图片小的话看起来不会很丑 */
+}
+
+.discription{
+    width: 70%;
+    padding:20px;
 }

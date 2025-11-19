@@ -1,26 +1,20 @@
 <h1>Product Catalog</h1>
+<div class="container">
+    <% @products.each do |product| %>
+        <div class="single_item">
 
-<% @products.each do |product| %>
+            <% if product.image.attached? %>
+                <%= image_tag(product.image)  %>
+            <% end %>
 
+            <h5><%= link_to product.name, shopper_path(product), class:"link-btn", style: "font-size:1.3em" %></h5>
 
-<hr>
-<div>
-    <div>
-        <%= image_tag('img.png') %>
-    </div>
+            <p><%= product.description %></p>
 
-    <h3><%= product.name %></h3>
+            <h3>$<%= product.price %></h3>
 
-    <p>
-        <%= product.description %>
-    </p>
-
-    <h3>
-        <%= product.price %>
-    </h3>
-
-    <%= button_to("Add to Cart", cartitems_path, params:{cartitem:{product_id: product.id}}) %>
+            <%= render partial:"add2cart", locals: { product: product } %>
+        </div>
+    <% end %>
 </div>
-</hr>
 
-<% end %>

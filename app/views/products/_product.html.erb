@@ -1,23 +1,14 @@
-<div id="<%= dom_id product %>" class="<%= cycle('list_line_odd','list_line_even') %>">
-  <p>
-    <strong>Name:</strong>
-    <%= product.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </p>
-
-  <p>
-    <strong>Image:</strong>
-    <!--><%= image_tag('img.png') %><!-->
-    <%= product.image %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= product.price %>
-  </p>
-
+<div class="<%= cycle('list_line_odd','list_line_even') %>">
+  
+  <div class="product-img">
+    <% if product.image.attached? %>
+      <%= image_tag(product.image)  %>
+    <% end %>
+  </div>
+  <div class="discription">
+      <h2><%= product.name %></h1>
+      <h3><%= product.description %></h2>
+      <h3>$<%= product.price %></h2>
+  </div>
 </div>
+

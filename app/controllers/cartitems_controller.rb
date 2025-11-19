@@ -1,7 +1,7 @@
 class CartitemsController < ApplicationController
-  before_action :set_cart, :set_cartitem, only: %i[ show edit update destroy ]
+  before_action :set_cartitem, only: %i[ show edit update destroy ]
 
-  include module CurrentCart
+  include module CurrentCart #include this module in other controller, otherwise cart will be nil
   before_action :set_cart  
 
   # GET /cartitems or /cartitems.json

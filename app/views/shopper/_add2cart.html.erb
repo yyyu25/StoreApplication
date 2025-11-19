@@ -1,0 +1,33 @@
+<button class="btn add_cart-btn" data-bs-toggle="offcanvas" data-bs-target="#cartPanel-<%= product.id %>" >
+            Add to Cart
+</button>
+            
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartPanel-<%= product.id %>">
+    <div class="offcanvas-header">
+        <%= link_to "Continue shopping", shopper_index_path, class:"link-btn" %>
+        <%= link_to "🛒 Go to cart", "/", class:"link-btn" %> 
+
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <hr>
+
+    <div class="offcanvas-body">
+        <p style="text-align:center; margin-bottom: 10px;">✅ Added to cart</p>
+
+        <div class="cart-item">
+            <% if product.image.attached? %>
+                <%= image_tag product.image, style: "width:300px; background-color: white; border: solid 0.5px beige;" %>
+            <% end %>
+            <p>
+            <strong>$<%= product.price %></strong>
+            </p>
+        </div>
+
+        <hr>
+
+        <a class="btn btn-primary w-100" href="/cart">
+            Go to Cart
+        </a>
+    </div>
+</div>
