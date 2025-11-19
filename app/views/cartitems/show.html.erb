@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @cartitem %>
+
+<div>
+  <%= link_to "Edit this cartitem", edit_cartitem_path(@cartitem) %> |
+  <%= link_to "Back to cartitems", cartitems_path %>
+
+  <%= button_to "Destroy this cartitem", @cartitem, method: :delete %>
+</div>

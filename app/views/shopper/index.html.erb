@@ -1,0 +1,26 @@
+<h1>Product Catalog</h1>
+
+<% @products.each do |product| %>
+
+
+<hr>
+<div>
+    <div>
+        <%= image_tag('img.png') %>
+    </div>
+
+    <h3><%= product.name %></h3>
+
+    <p>
+        <%= product.description %>
+    </p>
+
+    <h3>
+        <%= product.price %>
+    </h3>
+
+    <%= button_to("Add to Cart", cartitems_path, params:{cartitem:{product_id: product.id}}) %>
+</div>
+</hr>
+
+<% end %>

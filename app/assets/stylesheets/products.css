@@ -1,0 +1,11 @@
+.products {
+
+}
+
+.list_line_odd {
+    background-color: rgb(237, 237, 220);
+}
+
+.list_line_even {
+    background-color:rgb(203, 199, 199);
+}
