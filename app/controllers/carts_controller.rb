@@ -8,6 +8,14 @@ class CartsController < ApplicationController
 
   # GET /carts/1 or /carts/1.json
   def show
+    @cartitems = @cart.cartitems
+
+    tax_rate = 0.09125
+    @delivery_fee = @cartitems.any? ? 9.99 : 0
+
+    @subtotal_price = @cartitems.sum { |item| item.quantity * item.product.price }
+    @estimated_sales_tax = (@subtotal_price * tax_rate).round(2)
+    @total_price = @subtotal_price + @estimated_sales_tax + @delivery_fee 
   end
 
   # GET /carts/new
@@ -60,7 +68,7 @@ class CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params.expect(:id))
+      @cart = Cart.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

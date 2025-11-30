@@ -65,3 +65,19 @@
     background-color: rgb(247, 232, 131);   /* hover 更深一点 */
     border-color: rgb(247, 232, 131);
 }
+
+.checkout-btn {
+    background-color: rgb(247, 223, 75);
+    color:white; 
+    display:block; 
+    width:100%; 
+    padding:10px 0;
+    border-radius: 10px;
+    text-align:center; 
+    
+}
+
+.checkout-btn:hover {
+    background-color: rgb(247, 232, 131);   /* hover 更深一点 */
+
+}

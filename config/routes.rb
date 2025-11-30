@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get    "/login",  to: "sessions#new"
+  post   "/login",  to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
+  get "/checkout", to: "orders#new", as: "checkout"
+
+  resources :users
   resources :cartitems
   resources :carts
   resources :shopper, only: [:index, :show]

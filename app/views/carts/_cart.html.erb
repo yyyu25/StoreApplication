@@ -1,2 +1,20 @@
-<div id="<%= dom_id cart %>">
+<div id="<%= dom_id @cart %>" style="display:flex">
+
+    <div style="width:65%; margin-right:5em">
+        <%= link_to "Continue shopping", shopper_index_path, class:"link-btn" %>
+        <h2>Your Cart</h2>
+        <hr>
+
+        <div>
+        <% @cartitems.each do |cartitem| %>
+            <%= render "cartitems/cartitem", cartitem: cartitem %>
+            <hr>
+        <% end %>
+        </div>
+    </div>
+    
+    <div id="order_summary" style="width:30%; border-left:solid 1px grey;">
+        <%= render "cartitems/order_summary", cart: @cart %>
+    </div>
+
 </div>

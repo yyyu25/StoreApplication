@@ -1,11 +1,7 @@
-<button class="btn add_cart-btn" data-bs-toggle="offcanvas" data-bs-target="#cartPanel-<%= product.id %>" >
-            Add to Cart
-</button>
-            
 <div class="offcanvas offcanvas-end" tabindex="-1" id="cartPanel-<%= product.id %>">
     <div class="offcanvas-header">
         <%= link_to "Continue shopping", shopper_index_path, class:"link-btn" %>
-        <%= link_to "🛒 Go to cart", "/", class:"link-btn" %> 
+        <%= link_to "🛒 Go to cart", cart_path(session[:cart_id]), class:"link-btn" %> 
 
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -26,8 +22,20 @@
 
         <hr>
 
-        <a class="btn btn-primary w-100" href="/cart">
+        <a class="btn btn-primary w-100" href="<%= cart_path(session[:cart_id]) %>">
             Go to Cart
         </a>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".add_cart-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const id = btn.dataset.bsProductId;
+      const panel = document.querySelector(`#cartPanel-${id}`);
+      const offcanvas = new bootstrap.Offcanvas(panel, { backdrop: false });
+      offcanvas.show();
+    });
+  });
+});
+</script>

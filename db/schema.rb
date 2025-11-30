@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_19_204844) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_29_235136) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -52,6 +52,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_204844) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -63,8 +65,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_204844) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "password_digest"
+    t.text "address"
+    t.string "email"
+    t.string "pay_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cartitems", "carts"
   add_foreign_key "cartitems", "products"
+  add_foreign_key "carts", "users"
 end

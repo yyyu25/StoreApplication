@@ -1,7 +1,6 @@
 class CartitemsController < ApplicationController
+  include CurrentCart
   before_action :set_cartitem, only: %i[ show edit update destroy ]
-
-  include module CurrentCart #include this module in other controller, otherwise cart will be nil
   before_action :set_cart  
 
   # GET /cartitems or /cartitems.json
@@ -24,33 +23,36 @@ class CartitemsController < ApplicationController
 
   # POST /cartitems or /cartitems.json
   def create
-  
-    @cartitem = Cartitem.new(cartitem_params)
-    
-    # @cart.cartitems.build(product_id: params[:product_id]) #ToDO
+    exist_item = @cart.cartitems.find_by(product_id: params[:product_id])
 
-    respond_to do |format|
-      if @cartitem.save
-        format.html { redirect_to @cartitem, notice: "Cartitem was successfully created." }
-        format.json { render :show, status: :created, location: @cartitem }
+    if exist_item
+      exist_item.quantity += 1
+      if exist_item.save
+        redirect_to shopper_index_path(added: params[:product_id])
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @cartitem.errors, status: :unprocessable_entity }
+        redirect_to shopper_index_path, alert: "Failed to add item."
+      end
+    else
+      @cartitem = @cart.cartitems.build(product_id: params[:product_id])    
+    
+      if @cartitem.save
+        redirect_to shopper_index_path(added: params[:product_id])
+      else
+        redirect_to shopper_index_path, alert: "Failed to add item."
       end
     end
+    
   end
 
   # PATCH/PUT /cartitems/1 or /cartitems/1.json
   def update
-    respond_to do |format|
+      @cartitem = Cartitem.find(params[:id])
+    
       if @cartitem.update(cartitem_params)
-        format.html { redirect_to @cartitem, notice: "Cartitem was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @cartitem }
+        redirect_to cart_path(session[:cart_id]), notice: "Updated!"
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @cartitem.errors, status: :unprocessable_entity }
+        redirect_to cart_path(session[:cart_id]), alert: "Update failed."
       end
-    end
   end
 
   # DELETE /cartitems/1 or /cartitems/1.json
@@ -58,7 +60,7 @@ class CartitemsController < ApplicationController
     @cartitem.destroy!
 
     respond_to do |format|
-      format.html { redirect_to cartitems_path, notice: "Cartitem was successfully destroyed.", status: :see_other }
+      format.html { redirect_to cart_path(session[:cart_id]), notice: "Item removed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -66,11 +68,12 @@ class CartitemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cartitem
-      @cartitem = Cartitem.find(params.expect(:id))
+      @cartitem = Cartitem.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def cartitem_params
-      params.expect(cartitem: [ :product_id, :cart_id ])
+      params.require(:cartitem).permit(:quantity)
     end
+
 end

@@ -1,12 +1,34 @@
-<div id="<%= dom_id cartitem %>">
-  <p>
-    <strong>Product:</strong>
-    <%= cartitem.product_id %>
-  </p>
+<div id="<%= dom_id(cartitem) %>" 
+     style="display:flex; align-items:center; flex-wrap:nowrap; gap:25px; margin:12px 0; min-width:650px;">
 
-  <p>
-    <strong>Cart:</strong>
-    <%= cartitem.cart_id %>
-  </p>
+  <div style="flex:0 0 auto;">
+    <%= image_tag cartitem.product.image,
+        style:"width:100px; border:0.5px solid beige; background:white;" %>
+  </div>
+
+  <div style="flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+    <strong><%= cartitem.product.name %></strong>
+  </div>
+
+  <div style="flex:0 0 70px;">
+    <%= form_with model: cartitem, url: cartitem_path(cartitem), method: :patch, local: true do |f| %>
+      <%= f.select :quantity, (1..10).to_a,
+          { selected: cartitem.quantity },
+          { onchange: "this.form.submit()", style: "padding:3px; width:60px;" } %>
+    <% end %>
+  </div>
+
+  <div style="flex:0 0 auto;">
+    <%= button_to "Remove",
+    cartitem_path(cartitem),
+    method: :delete,
+    form: { data: { turbo_stream: true } },
+    class: "remove-btn",
+    style: "color:red; cursor:pointer; background:none; border:none;" %>
+  </div>
+
+  <div style="flex:0 0 60px; text-align:right;">
+    $<%= cartitem.product.price %>
+  </div>
 
 </div>

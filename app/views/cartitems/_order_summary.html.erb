@@ -1,0 +1,23 @@
+<h2 style="text-align:center;">Order Summary</h2>
+<div style="padding:10px;">
+    <hr>
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+
+        <span>Subtotal</span>
+        <span style="text-align:right;">$<%= cart.subtotal %></span>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+        <span>Delivery Fee</span>
+        <span style="text-align:right;">$<%= cart.delivery_fee %></span>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+        <span>Estimated Sales Tax</span>
+        <span style="text-align:right;">$<%= cart.estimated_tax %></span>
+    </div>
+    <hr>
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+        <strong>Total</strong>
+        <strong style="text-align:right;">$<%= cart.total %></strong>
+    </div>
+    <%= link_to "Checkout", checkout_path, class:"checkout-btn" %>
+</div>
