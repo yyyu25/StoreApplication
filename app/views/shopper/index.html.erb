@@ -1,6 +1,28 @@
-<h1>Product Catalog</h1>
-<div class="container">
-    <% @products.each do |product| %>
+<div class="search-bar" style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:20px; ">
+    <%= form_with url: shopper_index_path, method: :get, local: true, data: { turbo: false }  do %>
+    <%= text_field_tag :query, params[:query], placeholder: "Search for items...", style:"width:400px; height:40px; font-size:18px; padding:8px;" %>
+    <%= submit_tag "Search", class: "btn btn-outline-secondary" %>
+    <% end %>
+    <% if params[:query].present? %>
+      <%= link_to "Clear", shopper_index_path, class: "btn btn-outline-secondary", style: "height:40px;" %>
+    <% end %>
+</div>
+
+<% if params[:query].present? %>
+  <div style="text-align:center; margin-bottom:20px;">
+    <p style="font-size:1.1em; color:#666;">
+      <% if @products.any? %>
+        Found <strong><%= @products.count %></strong> result(s) for "<strong><%= params[:query] %></strong>"
+      <% else %>
+        No results found for "<strong><%= params[:query] %></strong>"
+      <% end %>
+    </p>
+  </div>
+<% end %>
+
+<div class="container" id="products-container">
+    <% if @products.any? %>
+      <% @products.each do |product| %>
         <div class="single_item">
 
             <% if product.image.attached? %>
@@ -51,6 +73,15 @@
             </div>
         </div>
 
+      <% end %>
+    <% else %>
+      <div style="text-align:center; padding:40px;">
+        <% if params[:query].present? %>
+          <p style="font-size:1.2em; color:#999;">No products found matching your search.</p>
+        <% else %>
+          <p style="font-size:1.2em; color:#999;">No products available.</p>
+        <% end %>
+      </div>
     <% end %>
 </div>
 <script>
