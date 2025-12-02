@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_29_235136) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_033601) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -56,6 +56,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_235136) do
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.decimal "total"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -63,6 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_235136) do
     t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,6 +84,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_235136) do
     t.string "pay_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "card_type"
+    t.string "card_last4digits"
+    t.string "role", default: "shopper"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -82,4 +94,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_235136) do
   add_foreign_key "cartitems", "carts"
   add_foreign_key "cartitems", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "orders", "users"
 end

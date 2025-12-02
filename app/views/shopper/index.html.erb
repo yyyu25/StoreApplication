@@ -29,9 +29,7 @@
                 <%= image_tag(product.image)  %>
             <% end %>
 
-            <h5><%= link_to product.name, shopper_path(product), class:"link-btn", style: "font-size:1.3em" %></h5>
-
-            <p><%= product.description %></p>
+            <span><%= link_to product.name, shopper_path(product), class:"link-btn", style: "font-size:1.3em" %></span>
 
             <h3>$<%= product.price %></h3>
 

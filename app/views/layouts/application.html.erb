@@ -35,25 +35,38 @@
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">My online shop</a>
+          <% if current_user&.admin? %>
+            <a class="navbar-brand" href="/products">My online shop</a>
+          <% else %>
+            <a class="navbar-brand" href="/shopper">My online shop</a>
+          <% end %>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" href="/">Home</a>
-              </li>
+              
+              <% if current_user&.admin? %>
+                <li class="nav-item">
+                  <a class="nav-link active" href="/products/new">New Product</a>
+                </li>
+              <% end %>
+
+              <% if current_user&.shopper? %>
+                <li class="nav-item">
+                  <%= link_to "My Cart", cart_path(session[:cart_id]), class: "nav-link active" %>
+                </li>
+              <% end %>
 
               <% if logged_in? %>
                 <li style="display:flex;justify-content:flex-end;">
                   <%= link_to "Log out", logout_path, data: { turbo_method: :delete }, class: "nav-link" %>
                 </li>
               <% else %>
-                <li class="nav-item">
+                <li class="nav-item" style="display:flex;justify-content:flex-end;">
                   <a class="nav-link" href="/users/new">Sign up</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="display:flex;justify-content:flex-end;">
                   <a class="nav-link" href="/login">Sign in</a>
                 </li>
               <% end %>              
@@ -61,7 +74,7 @@
             </ul>
           </div>
         </div>
-        <%= link_to "🛒 Cart", cart_path(session[:cart_id]), style:"display:block; text-align:right; width:100px; margin-right:10px;"%>
+        
       </nav>
     </header>
 

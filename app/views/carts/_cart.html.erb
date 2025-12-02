@@ -2,8 +2,8 @@
 
     <div style="width:65%; margin-right:5em">
         <%= link_to "Continue shopping", shopper_index_path, class:"link-btn" %>
+        <br><br>
         <h2>Your Cart</h2>
-        <hr>
 
         <div>
         <% @cartitems.each do |cartitem| %>
@@ -14,7 +14,10 @@
     </div>
     
     <div id="order_summary" style="width:30%; border-left:solid 1px grey;">
+        <h2 style="text-align:center; margin-bottom:20px;">Order Summary</h2>
         <%= render "cartitems/order_summary", cart: @cart %>
+        <%= link_to "Checkout", checkout_path, class:"checkout-btn" %>
+
     </div>
 
 </div>

@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
+  def current_cart
+    session[:cart_id] ||= Cart.create.id
+    Cart.find(session[:cart_id])
+  end
 end

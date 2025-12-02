@@ -6,9 +6,16 @@
     <% end %>
   </div>
   <div class="discription">
-      <h2><%= product.name %></h1>
-      <h3><%= product.description %></h2>
-      <h3>$<%= product.price %></h2>
+      <h3><%= product.name %></h3>
+      <h4><%= product.description %></h3>
+      <h4>$<%= product.price %></h3>
+      <h4><%= product.quantity %> in stock</h3>
+  </div>
+  <div>
+    <%= button_to "Update", edit_product_path(product), method: :get, class:"link-btn" %>
+    <%= button_to "Remove", product, method: :delete,
+    data: { turbo_confirm: "Are you sure you want to delete this product?" }, class: "link-delete-btn", form_class: "inline-form" %>
+
   </div>
 </div>
 

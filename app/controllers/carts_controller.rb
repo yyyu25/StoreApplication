@@ -8,6 +8,7 @@ class CartsController < ApplicationController
 
   # GET /carts/1 or /carts/1.json
   def show
+    @cart = current_cart
     @cartitems = @cart.cartitems
 
     tax_rate = 0.09125
@@ -68,7 +69,7 @@ class CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params[:id])
+      @cart = Cart.find(session[:cart_id])
     end
 
     # Only allow a list of trusted parameters through.

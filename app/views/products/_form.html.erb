@@ -12,24 +12,36 @@
   <% end %>
 
   <div>
-    <%= form.label :name, class: "form-label"  %>
-    <%= form.text_field :name, required:true %>
+    <% form.label :name, class: "form-label"  %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Product name", required:true %>
   </div>
 
   <div>
-    <%= form.label :description, class: "form-label" %>
-    <%= form.text_area :description, class: "form-control", required:true %>
+    <% form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Product description", required:true %>
   </div>
 
   <div>
-    <%= form.label :image, class: "form-label" %>
-    <%= form.file_field :image, class: "form-control", required:true %>
+    <% form.label :image, class: "form-label" %>
+    <% if product.image.attached? %>
+      <div class="mb-2">
+        <p>Current image:</p>
+        <%= image_tag product.image, style: "width:150px; border-radius:6px;" %>
+      </div>
+      <%= form.file_field :image, class: "form-control" %>
+    <% else %>
+      <%= form.file_field :image, class: "form-control", required:true %>
+    <% end %>
   </div>
 
   <div>
-    <%= form.label :price, class: "form-label" %>
-    <span class="input-group-text">$</span>
-    <%= form.number_field :price, step: "0.01", class: "form-control", required:true %>
+    <% form.label :price, class: "form-label" %>
+    <%= form.number_field :price, step: "0.01", class: "form-control", placeholder: "Sale price (minimum $0.01)", required:true %>
+  </div>
+
+  <div>
+    <% form.label :quantity, class: "form-label" %>
+    <%= form.number_field :quantity, step: 1, min: 1, class: "form-control", placeholder: "Quantity in stock",required:true %>
   </div>
 
   <div>

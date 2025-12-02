@@ -45,10 +45,6 @@
     background-color: #f9f9f9; /* 图片小的话看起来不会很丑 */
 }
 
-.discription{
-    width: 50%;
-    padding:20px;
-}
 
 .add_cart-btn {
     background-color: rgb(247, 223, 75);   /* 自定义背景色 */

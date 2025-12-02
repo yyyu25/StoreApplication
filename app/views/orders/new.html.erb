@@ -1,0 +1,26 @@
+<div id="<%= dom_id @cart %>" style="display:flex">
+
+  <div style="width:65%; margin-right:5em">
+    <div>
+    <%= link_to "Back to cart", cart_path(@cart) %>
+    </div>
+
+    <strong>Pay with <%= current_user.card_last4digits %></strong>
+    <br>
+    <hr>
+
+    <strong>Shipping Address</strong>
+    <br>
+    <%= current_user.address %>
+    <hr>
+  </div>
+
+  
+  <div id="order_summary" style="width:30%; border-left:solid 1px grey;">
+    <h2 style="text-align:center; margin-bottom:20px;">Order Summary</h2>
+    <%=render "cartitems/order_summary", cart: @cart %>
+    <%= link_to "Place Order", orders_path, method: :post, class:"checkout-btn" %>
+
+  </div>
+
+</div>
