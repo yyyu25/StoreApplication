@@ -40,8 +40,13 @@
   </div>
 
   <div>
-    <% form.label :quantity, class: "form-label" %>
-    <%= form.number_field :quantity, step: 1, min: 1, class: "form-control", placeholder: "Quantity in stock",required:true %>
+    <%= form.label :available, "Available?" %>
+    <%= form.select :available, [["Yes", true], ["No", false]] %>
+  </div>
+
+  <div>
+    <%= form.label :quantity, "In stock", class: "form-label" %>
+    <%= form.number_field :quantity, step: 1, class: "form-control", placeholder: "Quantity in stock",required:true %>
   </div>
 
   <div>

@@ -1,0 +1,8 @@
+# document.querySelector("#item-<%= @cartitem.id %>-subtotal").innerHTML =
+#   "<%= j number_to_currency(@cartitem.subtotal) %>";
+
+# document.querySelector("#cart-total").innerHTML =
+# "<%= j number_to_currency(@cart.total) %>";
+
+document.getElementById("order_summary").innerHTML =
+  "<%= j(render partial: 'cartitems/order_summary', locals: { cart: @cart }) %>";

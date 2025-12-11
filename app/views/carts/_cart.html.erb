@@ -1,21 +1,32 @@
 <div id="<%= dom_id @cart %>" style="display:flex">
 
     <div style="width:65%; margin-right:5em">
-        <%= link_to "Continue shopping", shopper_index_path, class:"link-btn" %>
+        <% if @cartitems.present? %>
+            <%= link_to "Continue shopping", shopper_index_path, class:"link-btn" %>
+            
+        <% end %>
+        
         <br><br>
         <h2>Your Cart</h2>
-
+        <br>
         <div>
-        <% @cartitems.each do |cartitem| %>
-            <%= render "cartitems/cartitem", cartitem: cartitem %>
-            <hr>
+        <% if @cartitems.present? %>
+            <% @cartitems.each do |cartitem| %>
+                <%= render "cartitems/cartitem", cartitem: cartitem %>
+                <hr>
+            <% end %>
+        <% else %>
+            <span>Your cart is empty.</span> <%= link_to "Go shopping", shopper_index_path, class:"link-btn" %>
         <% end %>
+
         </div>
     </div>
     
     <div id="order_summary" style="width:30%; border-left:solid 1px grey;">
         <h2 style="text-align:center; margin-bottom:20px;">Order Summary</h2>
-        <%= render "cartitems/order_summary", cart: @cart %>
+        <div id="order_summary">
+            <%= render "cartitems/order_summary", cart: @cart %>
+        </div>
         <%= link_to "Checkout", checkout_path, class:"checkout-btn" %>
 
     </div>

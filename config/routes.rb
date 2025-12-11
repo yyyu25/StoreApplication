@@ -1,19 +1,18 @@
 Rails.application.routes.draw do
-  get "orders/new"
-  get "orders/create"
   get    "/login",  to: "sessions#new"
   post   "/login",  to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  get "/logout", to: "sessions#destroy"
   get "/checkout", to: "orders#new", as: "checkout"
   post "/checkout", to: "orders#create"
   get "/cart", to: "carts#show"
+  patch "/edit_name/:id", to: "users#edit_name", as: "edit_name"
 
   resources :users
   resources :cartitems
   resources :carts
   resources :shopper, only: [:index, :show]
   resources :products
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new, :create, :show, :index]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

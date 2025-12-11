@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   helper_method :current_user, :logged_in?
+  helper_method :current_cart
   
 
   def current_user
@@ -14,7 +15,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_cart
-    session[:cart_id] ||= Cart.create.id
-    Cart.find(session[:cart_id])
+    if current_user.nil?
+      cart = Cart.find_by(id: session[:cart_id])
+      unless cart
+        cart = Cart.create(user_id: nil)
+        session[:cart_id] = cart.id
+      end
+      return cart
+    end
+  
+    current_user.cart || current_user.create_cart
   end
+
 end

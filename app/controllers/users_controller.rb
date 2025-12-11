@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update destroy edit_name ]
 
   # GET /users or /users.json
   def index
@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    @fullname = @user.first_name + @user.last_name
   end
 
   # GET /users/new
@@ -17,6 +18,14 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  def edit_name
+    if @user.update(name_params)
+      redirect_to @user, notice: "User name updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   # POST /users or /users.json
@@ -37,14 +46,16 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if params[:user][:card_number].present?
+      num = params[:user][:card_number].gsub(/\D/, "")
+      @user.card_last4digits = num[-4..]
+      @user.pay_type = "credit card"
+    end
+  
+    if @user.update(user_params)
+      redirect_to params[:return_to] || user_path(@user), notice: "Profile updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -53,7 +64,7 @@ class UsersController < ApplicationController
     @user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other }
+      format.html { redirect_to shopper_index_path, notice: "User was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -61,11 +72,15 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params.expect(:id))
+      @user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit( :first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit( :first_name, :last_name, :email, :password, :password_confirmation, :address, :pay_type, :phone)
+    end
+
+    def name_params
+      params.require(:user).permit(:first_name, :last_name)
     end
 end

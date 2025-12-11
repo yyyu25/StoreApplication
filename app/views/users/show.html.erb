@@ -1,10 +1,50 @@
-<p style="color: green"><%= notice %></p>
+<h2>Login & Security</h2>
 
-<%= render @user %>
+  <p>
+    <strong>Name:</strong>
+    <%= @fullname%>
+  </p>
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+  <p>
+    <strong>Phone number:</strong>
+    <%= @user.phone %>
+  </p>
+  <p>
+    <strong>Password:</strong>
+    **********
+  </p>
+
+<h2>Delivery Address</h2>
+  <% if @user.address.nil?%>
+   
+  <% else %>
+    <p>
+      <strong>Address:</strong>
+      <%= @user.address %>
+    </p>
+  <% end %>
+
+
+<h2>Payment Method</h2>
+  <p>
+    <strong>Pay_type:</strong>
+    <%= @user.pay_type %>
+  </p>
+  <p>
+    <strong>Card Number:</strong>
+    <% if @user.card_last4digits.present? %>
+      **** **** **** <%= @user.card_last4digits %>
+    <% end %>
+  </p>
+
+
+</div>
+
 
 <div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
+  <%= link_to "Edit your profile", edit_user_path%>
+  <%= button_to "Delete your account", @user, method: :delete %>
 </div>

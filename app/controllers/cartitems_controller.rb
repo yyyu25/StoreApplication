@@ -1,79 +1,97 @@
 class CartitemsController < ApplicationController
-  include CurrentCart
+  before_action :set_cart
   before_action :set_cartitem, only: %i[ show edit update destroy ]
-  before_action :set_cart  
 
-  # GET /cartitems or /cartitems.json
+  # GET /cartitems
   def index
     @cartitems = Cartitem.all
   end
 
-  # GET /cartitems/1 or /cartitems/1.json
   def show
   end
 
-  # GET /cartitems/new
   def new
     @cartitem = Cartitem.new
   end
 
-  # GET /cartitems/1/edit
   def edit
   end
 
-  # POST /cartitems or /cartitems.json
   def create
-    exist_item = @cart.cartitems.find_by(product_id: params[:product_id])
-
+    product = Product.find_by(id: params[:product_id])
+    unless product
+      return redirect_to shopper_index_path, alert: "Product not found."
+    end
+  
+    if product.quantity <= 0 || !product.available
+      return redirect_to shopper_index_path, alert: "Sorry, this item is not available now."
+    end
+  
+    exist_item = @cart.cartitems.find_by(product_id: product.id)
+  
     if exist_item
+      if exist_item.quantity >= product.quantity
+        return redirect_to shopper_index_path, alert: "Add to cart failed: stock limit reached."
+      end
       exist_item.quantity += 1
       if exist_item.save
-        redirect_to shopper_index_path(added: params[:product_id])
+        redirect_to shopper_index_path(added: product.id)
       else
         redirect_to shopper_index_path, alert: "Failed to add item."
       end
     else
-      @cartitem = @cart.cartitems.build(product_id: params[:product_id])    
-    
+      @cartitem = @cart.cartitems.build(product_id: product.id, quantity: 1)
+  
       if @cartitem.save
-        redirect_to shopper_index_path(added: params[:product_id])
+        redirect_to shopper_index_path(added: product.id)
       else
         redirect_to shopper_index_path, alert: "Failed to add item."
       end
     end
-    
   end
 
-  # PATCH/PUT /cartitems/1 or /cartitems/1.json
+
   def update
-      @cartitem = Cartitem.find(params[:id])
+    product = @cartitem.product
+    new_qty = params[:cartitem][:quantity].to_i
     
-      if @cartitem.update(cartitem_params)
-        redirect_to cart_path(session[:cart_id]), notice: "Updated!"
-      else
-        redirect_to cart_path(session[:cart_id]), alert: "Update failed."
+    if new_qty > product.quantity
+      respond_to do |format|
+        format.js { flash.now[:alert] = "Not enough stock. Maximum availble is #{product.quantity}." }
+        format.html { redirect_to cart_path, alert: "Not enough stock. Maximum availble is #{product.quantity}." }
       end
+      return
+    end
+
+    if @cartitem.update(cartitem_params)
+      respond_to do |format|
+        format.js
+        format.html { redirect_to cart_path }
+      end
+    else
+      respond_to do |format|
+        format.js
+        format.html { render :edit }
+      end
+    end
   end
 
-  # DELETE /cartitems/1 or /cartitems/1.json
   def destroy
     @cartitem.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to cart_path(session[:cart_id]), notice: "Item removed.", status: :see_other }
-      format.json { head :no_content }
-    end
+    redirect_to cart_path(session[:cart_id]), notice: "Item removed."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cartitem
-      @cartitem = Cartitem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def cartitem_params
-      params.require(:cartitem).permit(:quantity)
-    end
+  def set_cart
+    @cart = current_cart
+  end
 
+  def set_cartitem
+    @cartitem = Cartitem.find(params[:id])
+  end
+
+  def cartitem_params
+    params.require(:cartitem).permit(:quantity)
+  end
 end

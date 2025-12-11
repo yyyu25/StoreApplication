@@ -1,0 +1,13 @@
+<%= form_with model: @user, url: edit_name_path(@user), method: :patch do |f| %>
+    <div>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+    </div>
+  
+    <div>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>
+  
+    <%= f.submit "Save" %>
+<% end %>

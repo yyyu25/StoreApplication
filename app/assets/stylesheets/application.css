@@ -66,7 +66,7 @@ header {
 
 .btn-edit{
     margin: 10px;
-    background-color: #1882d8; /* Bootstrap danger 红 */
+    background-color: #1882d8;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -77,7 +77,7 @@ header {
 
 .btn-delete{
     margin: 10px;
-    background-color: #ee2b3f; /* Bootstrap danger 红 */
+    background-color: #ee2b3f;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -89,7 +89,7 @@ header {
 .link-btn{
     background: none;
     border: none;
-    color: #0003cc;   /* 红色 */
+    color: #0003cc;
     padding: 0;
     font-size: 1rem;
     cursor: pointer;
@@ -103,7 +103,7 @@ header {
 .link-delete-btn{
     background: none;
     border: none;
-    color: #cc0000;   /* 红色 */
+    color: #cc0000; 
     padding: 0;
     font-size: 1rem;
     cursor: pointer;
@@ -119,27 +119,22 @@ header {
   margin-right: 10px;
 }
 
-/* ========== Offcanvas 面板样式 ========== */
 .offcanvas {
-    background-color: #f4f1ee;   /* 莫兰迪米色 */
+    background-color: #f4f1ee;  
     padding: 10px;
 }
 
-/* Header：Continue + Cart */
 .offcanvas-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-
-/* 分隔线 */
 .offcanvas hr {
     border-top: 1px solid #d2c8be;
     margin: 12px 0;
 }
 
-/* ========== 商品项 ========== */
 .cart-item {
     display: flex;
     flex-direction: column;
@@ -155,7 +150,6 @@ header {
     border: 1px solid #e0d9d1;
 }
 
-/* 文案 */
 .offcanvas-body p {
     margin: 6px 0;
     font-size: 1rem;

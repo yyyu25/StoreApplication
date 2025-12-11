@@ -1,12 +1,11 @@
 <% content_for :title, "Editing user" %>
+<%= hidden_field_tag :return_to, user_path(@user) %>
+<h1>Editing your profile</h1>
 
-<h1>Editing user</h1>
-
-<%= render "form", user: @user %>
+<%= render "editform", user: @user %>
 
 <br>
 
 <div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
+  <%= link_to "Back", user_path %>
 </div>

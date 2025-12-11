@@ -23,4 +23,5 @@ class Cart < ApplicationRecord
   def total
     subtotal + estimated_tax + delivery_fee
   end
+
 end

@@ -1,12 +1,6 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: %i[ show edit update destroy ]
 
-  # GET /carts or /carts.json
-  def index
-    @carts = Cart.all
-  end
-
-  # GET /carts/1 or /carts/1.json
+  # GET /cart
   def show
     @cart = current_cart
     @cartitems = @cart.cartitems
@@ -16,64 +10,14 @@ class CartsController < ApplicationController
 
     @subtotal_price = @cartitems.sum { |item| item.quantity * item.product.price }
     @estimated_sales_tax = (@subtotal_price * tax_rate).round(2)
-    @total_price = @subtotal_price + @estimated_sales_tax + @delivery_fee 
+    @total_price = @subtotal_price + @estimated_sales_tax + @delivery_fee
   end
 
-  # GET /carts/new
-  def new
-    @cart = Cart.new
-  end
-
-  # GET /carts/1/edit
-  def edit
-  end
-
-  # POST /carts or /carts.json
-  def create
-    @cart = Cart.new(cart_params)
-
-    respond_to do |format|
-      if @cart.save
-        format.html { redirect_to @cart, notice: "Cart was successfully created." }
-        format.json { render :show, status: :created, location: @cart }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @cart.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /carts/1 or /carts/1.json
-  def update
-    respond_to do |format|
-      if @cart.update(cart_params)
-        format.html { redirect_to @cart, notice: "Cart was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @cart }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @cart.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /carts/1 or /carts/1.json
+  # DELETE /cart
   def destroy
-    @cart.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to carts_path, notice: "Cart was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
-    end
+    @cart = current_cart
+    @cart.cartitems.destroy_all
+    redirect_to shopper_index_path, notice: "Cart cleared."
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cart
-      @cart = Cart.find(session[:cart_id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def cart_params
-      params.fetch(:cart, {})
-    end
 end
