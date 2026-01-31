@@ -1,167 +1,167 @@
-🛍️ StoreApplication
+# StoreApplication
 
-StoreApplication is a full-stack Ruby on Rails e-commerce platform that supports user authentication, product browsing, shopping cart management, and order processing.
-The system includes role-based access control with separate privileges for admin and shopper users.
+StoreApplication is a course final project built with Ruby on Rails, implementing a complete e-commerce workflow from user authentication to order processing and administrative product management.
 
-✨ Features
-👤 User Authentication
+The application is designed to practice full-stack web application development using the Rails MVC architecture, with a focus on real-world business logic such as carts, orders, role-based access control, and data integrity constraints.
 
-User signup, login, and logout
+---
 
-Secure password hashing using bcrypt
+## Project Overview
 
-Session-based authentication
+This project demonstrates how core Rails components work together to support an end-to-end shopping experience, including authentication, authorization, relational data modeling, and controller-driven workflows.
 
-Different behaviors based on user role (admin vs regular user)
+---
 
-🛒 Storefront (Shopper Features)
+## Key Features
 
-View all products
+### User Authentication
+- User signup, login, and logout
+- Secure password hashing using bcrypt
+- Session-based authentication
+- Role-based behavior for admin and shopper users
 
-View individual product details
+### Storefront (Shopper Features)
+- Browse all products and view product details
+- Add products to a shopping cart
+- Update item quantities or remove items from the cart
+- Persistent cart associated with the logged-in user
+- Place orders directly from the cart
 
-Add items to cart
+### Order Processing
+- Create orders containing all current cart items
+- Store order items with product snapshots and quantities
+- Enforce data integrity by preventing deletion of products that appear in existing orders
 
-Update item quantity in cart
+### Admin Panel
+Administrators can:
+- Create, edit, and manage products
+- Delete products with safety checks:
+  - Products cannot be deleted if they exist in any cart or order
 
-Remove items from cart
+### Role-Based Access Control
+- Admin users: full access to product management
+- Shopper users: browsing and purchasing only
+- Unauthorized access attempts are redirected with alerts or notices
 
-Persistent cart based on logged-in user
+---
 
-Place orders from the cart
+## Tech Stack
 
-🧾 Orders
+Backend Framework: Ruby on Rails  
+Language: Ruby  
+Authentication: bcrypt + Rails sessions  
+Database: SQLite3  
+Views: ERB (Embedded Ruby Templates)  
+Assets: HTML / CSS / JavaScript  
+Architecture: MVC (Model–View–Controller)
 
-Create an order with all current cart items
+---
 
-Store order items with quantities and product information
+## Application Design
 
-Prevent deletion of products that already appear in orders
+The application follows standard Rails MVC conventions:
 
-👩‍💼 Admin Panel
+- Models encapsulate business logic and relational data
+- Controllers handle request routing, authentication, and authorization
+- Views render dynamic pages using ERB templates
 
-Admins can:
+Core domain models include:
+- User (with role-based permissions)
+- Product
+- Cart / CartItem
+- Order / OrderItem
 
-Create new products
+Special attention is given to data consistency, such as preventing deletion of products that are still referenced by carts or orders.
 
-Edit existing products
+---
 
-Delete products (with safety check — cannot delete products in carts or orders)
+## Getting Started
 
-🔒 Role-Based Access
-
-Admin: full access to product management
-
-Shopper: can browse and purchase only
-
-Unauthorized users are redirected with alerts/notices
-
-🧱 No API / No Test Suite
-
-The app is built entirely with Rails MVC (no JSON API mode)
-
-No automated test suite yet
-
-🛠️ Tech Stack
-Component	Technology
-Backend Framework	Ruby on Rails
-Language	Ruby
-Authentication	bcrypt + Rails sessions
-Database	SQLite3 (development) or your configured DB
-Views	ERB (Embedded Ruby Templates)
-Assets	HTML / CSS / JS
-🚀 Getting Started
-1️⃣ Clone the Repository
-git clone https://github.com/yyyu25/StoreApplication.git
+### Clone the Repository
+git clone https://github.com/yyyu25/StoreApplication.git  
 cd StoreApplication
 
-2️⃣ Install Dependencies
-gem install bundler
+### Install Dependencies
+gem install bundler  
 bundle install
 
-3️⃣ Set Up the Database
-rails db:create
-rails db:migrate
-rails db:seed   # If seeds are provided
+### Set Up the Database
+rails db:create  
+rails db:migrate  
+rails db:seed   (if seeds are provided)
 
-4️⃣ Start the Application
+### Start the Server
 rails server
 
+Open your browser at:  
+http://localhost:3000
 
-Open your browser at:
-👉 http://localhost:3000
+---
 
-📁 Project Structure
-app/
-  controllers/   # Authentication, products, cart, orders, admin controllers
-  models/        # User, Product, Cart, CartItem, Order, OrderItem
-  views/         # ERB templates for all pages
-config/
-  routes.rb      # Full routing configuration
-db/
-  migrate/       # Database schema migrations
-Gemfile          # Gem dependencies
-README.md
+## Example Routes
 
-🔗 Key Routes (Examples)
-Route	Method	Description
-/login	GET / POST	User login
-/signup	GET / POST	User registration
-/shopper	GET	Shopper storefront
-/products	GET	Admin + Shopper product list
-/products/new	GET	Admin: create product
-/cartitems	POST	Add to cart
-/cartitems/:id	PATCH	Update cart item quantity
-/cartitems/:id	DELETE	Remove from cart
-/orders	POST	Create order
+/signup            GET / POST   User registration  
+/login             GET / POST   User login  
+/products          GET          Product listing  
+/products/new      GET          Admin: create product  
+/cartitems         POST         Add item to cart  
+/cartitems/:id     PATCH        Update cart item quantity  
+/cartitems/:id     DELETE       Remove item from cart  
+/orders            POST         Create order  
 
-These can be updated exactly once you send routes.rb, but the above reflects your described features.
+---
 
-📝 Important Behaviors
-Prevent deleting products that are still in use
+## Notable Behaviors
 
-If a product is referenced in:
+Safe deletion rules:
+- Products cannot be deleted if they appear in any cart items
+- Products cannot be deleted if they appear in any order items
 
-any cart items
+Cart logic:
+- Each user has a dedicated cart
+- Adding an existing product increases quantity
+- Quantities can be adjusted through form controls
+- Delete actions use Rails UJS to send DELETE requests
 
-any order items
+---
 
-it cannot be deleted.
-Instead, the app redirects with an alert message.
+## Not Included
 
-Cart behavior
+- No JSON API endpoints (server-rendered MVC application)
+- No automated test suite yet
+- No frontend framework (ERB-based views)
 
-Each user has their own cart
+---
 
-Adding an already-existing product increases quantity
+## Learning Outcomes
 
-Quantity can be adjusted via form select
+This project provided hands-on experience with:
+- Building a full-stack Rails application from scratch
+- Implementing authentication and role-based authorization
+- Modeling relational data with ActiveRecord
+- Designing end-to-end workflows (cart to order)
+- Enforcing business rules and data integrity constraints
 
-Delete links use Rails UJS to send DELETE requests
+---
 
-🚫 Not Included
+## Possible Improvements
 
-No API endpoints (no JSON controllers)
+Future enhancements could include:
+- Replacing SQLite with PostgreSQL for production use
+- Adding automated tests (RSpec)
+- Introducing payment processing
+- Improving UI/UX and frontend interactivity
+- Adding background jobs for order-related tasks
 
-No backend test suite yet
+---
 
-No frontend framework (uses ERB)
+## License
 
-🤝 Contributing
+MIT License
 
-Fork the project
+---
 
-Create a feature branch
+## Contact
 
-Commit your changes
-
-Open a pull request
-
-📄 License
-
-MIT License (or update if you prefer another license).
-
-📬 Contact
-
-Created by yyyu25
+Created by yyyu25  
 GitHub: https://github.com/yyyu25
